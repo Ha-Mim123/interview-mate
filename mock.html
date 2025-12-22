@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mock Interview • InterviewMate</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .userwrap {
+      position: relative
+    }
+
+    .userpill {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .userdd {
+      position: absolute;
+      right: 0;
+      top: 46px;
+      width: 220px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      display: none;
+      z-index: 50;
+    }
+
+    .userdd.open {
+      display: block
+    }
+
+    .userdd .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      word-break: break-all
+    }
+
+    .userdd button {
+      width: 100%;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .userdd button:hover {
+      background: #f7f7ff
+    }
+
+    /* ✅ Dark mode friendly (optional) */
+    body.dark .userdd {
+      background: var(--panel)
+    }
+
+    body.dark .userdd button {
+      background: var(--panel);
+      color: var(--text)
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" id="themeToggle" title="Light/Dark toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <h1 class="h1">AI Mock Interview</h1>
+      <p class="p">This uses OpenAI via a Cloudflare Worker endpoint. Write an answer and submit to get feedback.</p>
+
+      <div class="mock-layout">
+        <div class="panel pad">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <h2 class="h2" style="margin:0;">Session setup</h2>
+            <span id="sessionBadge" class="badge">Ready</span>
+          </div>
+
+          <div class="form-grid" style="margin-top:10px;">
+            <div>
+              <label>Role</label>
+              <select id="roleSelect">
+                <option>General HR / any role</option>
+                <option>Frontend Developer</option>
+                <option>Backend Developer</option>
+                <option>Software Engineer</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Question type</label>
+              <select id="typeSelect">
+                <option>Mix of questions</option>
+                <option>HR / General</option>
+                <option>Behavioral</option>
+                <option>Strength / weakness</option>
+              </select>
+            </div>
+
+            <div>
+              <label>How many questions this round?</label>
+              <select id="countSelect">
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <button class="btn primary" id="startMockBtn" type="button">
+              Start mock interview
+            </button>
+          </div>
+        </div>
+
+        <div class="panel pad">
+          <h2 class="h2" style="margin-top:0;">Current question</h2>
+          <div class="question-box panel soft">
+            <div class="k" style="color:var(--muted); font-size:12px;">Question</div>
+            <div id="currentQuestion" style="margin-top:6px;font-size:14px;">
+              Click “Start mock interview” to begin.
+            </div>
+
+            <div class="hr"></div>
+
+            <label for="answerText">Your answer (text)</label>
+            <textarea id="answerText" placeholder="Write your answer here..."></textarea>
+
+            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+              <button class="btn primary" id="submitAnswerBtn" type="button" disabled>
+                Submit answer
+              </button>
+              <button class="btn" type="button" onclick="document.getElementById('answerText').value=''">
+                Clear
+              </button>
+            </div>
+
+            <div id="feedbackBox"></div>
+
+            <p class="p" style="margin-top:12px;">
+              Tip: Keep answers structured (STAR) and around 60–90 seconds.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script type="module" src="mock-ai.js"></script>
+  <script type="module" src="mock-auth.js"></script>
+
+
+  <script src="app.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const pre = localStorage.getItem("im_prefill_question");
+      if (pre && document.querySelector("#currentQuestion")) {
+        document.querySelector("#currentQuestion").textContent = pre;
+        localStorage.removeItem("im_prefill_question");
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

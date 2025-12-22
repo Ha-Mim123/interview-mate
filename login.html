@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Login • InterviewMate</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .auth-wrap{
+      min-height: calc(100vh - 120px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding-top: 20px;
+    }
+    .auth-card{
+      width: min(520px, 92vw);
+      padding: 26px;
+    }
+    .auth-title{font-size:34px;margin:0 0 4px}
+    .auth-sub{color:var(--muted);margin:0 0 18px;line-height:1.45}
+    .auth-form{display:grid;gap:12px;margin-top:8px}
+    .auth-row{display:grid;gap:6px}
+    .auth-actions{display:grid;gap:10px;margin-top:6px}
+    .hint{
+      margin-top:14px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+    .hint a{color:var(--primary); font-weight:700}
+    .err{
+      margin-top: 10px;
+      color:#d11;
+      font-weight:700;
+      font-size: 13px;
+      white-space: pre-line;
+    }
+    .ok{
+      margin-top: 10px;
+      color:#0a7a2a;
+      font-weight:700;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+      </div>
+
+      <div class="navright">
+        <a class="btn primary" href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="auth-wrap">
+      <div class="panel auth-card">
+        <h1 class="auth-title">Welcome back 👋</h1>
+        <p class="auth-sub">Login with your email and password to continue.</p>
+
+        <form id="loginForm" class="auth-form">
+          <div class="auth-row">
+            <label for="email">Email</label>
+            <input class="input" id="email" type="email" placeholder="you@example.com" required />
+          </div>
+
+          <div class="auth-row">
+            <label for="password">Password</label>
+            <input class="input" id="password" type="password" placeholder="Minimum 6 characters" minlength="6" required />
+          </div>
+
+          <div class="auth-actions">
+            <button class="btn primary" id="loginBtn" type="submit">Login</button>
+            <button class="btn" id="forgotBtn" type="button">Forgot password</button>
+          </div>
+
+          <div id="msgOk" class="ok" style="display:none;"></div>
+          <div id="msgErr" class="err" style="display:none;"></div>
+
+          <div class="hint">
+            Don’t have an account?
+            <a href="signup.html">Sign up</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script type="module" src="login.js"></script>
+</body>
+</html>

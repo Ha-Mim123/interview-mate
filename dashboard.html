@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard • InterviewMate</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* small dropdown */
+    .userwrap {
+      position: relative
+    }
+
+    .userpill {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .userdd {
+      position: absolute;
+      right: 0;
+      top: 46px;
+      width: 220px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      display: none;
+      z-index: 50;
+    }
+
+    .userdd.open {
+      display: block
+    }
+
+    .userdd .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      word-break: break-all
+    }
+
+    .userdd button {
+      width: 100%;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .userdd button:hover {
+      background: #f7f7ff
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <!-- <a data-nav href="questions.html">Questions</a> -->
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" title="demo toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <div class="row">
+        <div>
+          <h1 class="h1">Dashboard</h1>
+          <p class="p">Simple overview of recent practice. Later you can fill this with real data from your database.
+          </p>
+        </div>
+
+        <div class="quick-actions">
+          <a class="btn primary" href="mock.html">Start mock interview</a>
+          <a class="btn" href="questions.html">Open question bank</a>
+          <a class="btn" href="resume.html">Check my resume</a>
+        </div>
+      </div>
+
+      <h2 class="h2" style="margin-top:8px;">Overview</h2>
+      <p class="p">Small example stats. Replace numbers with your real values when you connect backend.</p>
+
+      <div class="panel card">
+        <div class="k">Mock sessions</div>
+        <div class="k">Last 7 days</div>
+        <div class="v" id="statMock7">0</div>
+      </div>
+      <br>
+
+      <div class="panel card">
+        <div class="k">Questions answered</div>
+        <div class="k">Total</div>
+        <div class="v" id="statAnsweredTotal">0</div>
+      </div>
+      <br>
+
+
+      <div class="panel card">
+        <div class="k">Next Focus</div>
+        <div class="k">Today</div>
+        <div style="margin-top:10px;color:#2f3442;" id="nextFocusText">
+          —
+        </div>
+      </div>
+
+    </div>
+
+    <div class="panel pad" style="margin-top:14px;">
+      <h3 class="h2" style="margin-top:0;">Recent practice (example)</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Topic</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="recentPracticeBody">
+          <tr>
+            <td>18-11-2025</td>
+            <td>Mock</td>
+            <td>Tell me about yourself</td>
+            <td>Try to keep under 90 seconds.</td>
+          </tr>
+          <tr>
+            <td>19-11-2025</td>
+            <td>Question</td>
+            <td>Biggest weakness</td>
+            <td>Use one real example and how you improved.</td>
+          </tr>
+          <tr>
+            <td>20-11-2025</td>
+            <td>Resume</td>
+            <td>CV length</td>
+            <td>Kept to 1 page, clearer headings.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <script src="app.js"></script>
+  <!-- ✅ Firebase auth control -->
+  <script type="module" src="dashboard-auth.js"></script>
+  <script type="module" src="dashboard-data.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Questions • InterviewMate</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    .userwrap{position:relative}
+    .userpill{cursor:pointer; user-select:none;}
+    .userdd{
+      position:absolute; right:0; top:46px;
+      width:220px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      padding:10px;
+      display:none;
+      z-index:50;
+    }
+    .userdd.open{display:block}
+    .userdd .meta{font-size:12px;color:var(--muted); margin-bottom:10px; word-break:break-all}
+    .userdd button{
+      width:100%;
+      height:36px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .userdd button:hover{background:#f7f7ff}
+    body.dark .userdd{background:var(--panel)}
+    body.dark .userdd button{background:var(--panel); color:var(--text)}
+
+    .qrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+    .qgrid{display:grid;gap:14px;margin-top:14px}
+    .qcard{padding:14px;border-radius:16px}
+    .qmeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+    .answerBox{white-space:pre-wrap;line-height:1.4}
+    .tips{margin:8px 0 0 18px}
+    .divider{height:1px;background:rgba(127,127,127,.15);margin:12px 0}
+  </style>
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <a data-nav href="questions.html">Questions</a>
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+        <a data-nav href="checklist.html">Checklist</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" id="themeToggle" title="Light/Dark toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start;">
+        <div>
+          <h1 class="h1">Question Bank</h1>
+          <p class="p">Type a keyword/topic and generate interview questions + sample answers.</p>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn primary" href="mock.html">Start mock</a>
+          <a class="btn" href="dashboard.html">Back to dashboard</a>
+        </div>
+      </div>
+
+      <div class="panel pad" style="margin-top:12px;">
+        <label for="qSearch">Search topic / keyword</label>
+        <input id="qSearch" class="input" placeholder="e.g. React hooks, teamwork conflict, REST API, SQL joins, salary negotiation" />
+
+        <div class="qrow">
+          <select id="qRole" class="input" style="max-width:240px;">
+            <option>General</option>
+            <option>Frontend Developer</option>
+            <option>Backend Developer</option>
+            <option>Software Engineer</option>
+            <option>Data Analyst</option>
+          </select>
+
+          <select id="qDifficulty" class="input" style="max-width:180px;">
+            <option value="easy">easy</option>
+            <option value="normal" selected>normal</option>
+            <option value="hard">hard</option>
+          </select>
+
+          <select id="qCount" class="input" style="max-width:160px;">
+            <option value="3">3 results</option>
+            <option value="5" selected>5 results</option>
+            <option value="8">8 results</option>
+          </select>
+
+          <button class="btn primary" id="generateBtn" type="button">Generate</button>
+          <button class="btn" id="clearBtn" type="button">Clear</button>
+        </div>
+
+        <div id="statusLine" class="muted" style="margin-top:10px;">Ready.</div>
+      </div>
+
+      <div id="results" class="qgrid"></div>
+    </div>
+  </div>
+
+  <!-- reuse your existing auth dropdown logic -->
+  <script type="module" src="resume-auth.js"></script>
+  <script src="app.js"></script>
+  <script src="questions-ai.js"></script>
+</body>
+</html>

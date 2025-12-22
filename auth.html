@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Login • InterviewMate</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* tiny page-specific polish (optional) */
+    .auth-wrap{max-width:520px;margin:0 auto}
+    .auth-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+    .auth-title{font-size:28px;margin:0}
+    .auth-sub{color:var(--muted);margin:0 0 18px;line-height:1.5}
+    .auth-actions{display:grid;gap:10px;margin-top:12px}
+    .auth-switch{margin-top:14px;color:var(--muted);font-size:13px}
+    .auth-switch a{color:var(--primary);font-weight:700}
+    .auth-error{margin-top:10px;color:#b91c1c;font-weight:700}
+    .auth-ok{margin-top:10px;color:#15803d;font-weight:700}
+  </style>
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navright">
+        <a class="btn" href="index.html">Back</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="auth-wrap panel pad">
+      <div class="auth-head">
+        <h1 class="auth-title" id="formTitle">Welcome 👋</h1>
+        <span class="badge" id="modeBadge">Sign up</span>
+      </div>
+      <p class="auth-sub" id="formSubtitle">Sign up or login to continue</p>
+
+      <div style="display:grid;gap:12px;">
+        <div>
+          <label>Email</label>
+          <input class="input" id="email" type="email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+
+        <div>
+          <label>Password</label>
+          <input class="input" id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password"/>
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <button class="btn primary block" id="primaryBtn">Sign up</button>
+        <button class="btn block" id="secondaryBtn">Login</button>
+      </div>
+
+      <div class="auth-error" id="errorBox" style="display:none;"></div>
+      <div class="auth-ok" id="okBox" style="display:none;"></div>
+
+      <div class="auth-switch">
+        <span id="switchText">Already have an account?</span>
+        <a href="#" id="switchLink">Login</a>
+      </div>
+
+      <div class="hr"></div>
+
+      <button class="btn block" id="googleBtn" type="button">Continue with Google (optional)</button>
+      <small style="display:block;margin-top:10px;">
+        Note: Email/Password auth must be enabled in Firebase Console.
+      </small>
+    </div>
+  </div>
+
+  <!-- Firebase config + auth logic -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth.js"></script>
+</body>
+</html>

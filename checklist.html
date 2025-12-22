@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Checklist • InterviewMate</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    .userwrap{position:relative}
+    .userpill{cursor:pointer; user-select:none;}
+    .userdd{
+      position:absolute; right:0; top:46px;
+      width:220px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      padding:10px;
+      display:none;
+      z-index:50;
+    }
+    .userdd.open{display:block}
+    .userdd .meta{font-size:12px;color:var(--muted); margin-bottom:10px; word-break:break-all}
+    .userdd button{
+      width:100%;
+      height:36px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .userdd button:hover{background:#f7f7ff}
+    body.dark .userdd{background:var(--panel)}
+    body.dark .userdd button{background:var(--panel); color:var(--text)}
+
+    .headrow{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .chip{
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+    }
+    .chip.active{border-color:var(--primary)}
+
+    .progressBar{
+      height:10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(127,127,127,.08); overflow:hidden;
+    }
+    .progressFill{height:100%;width:0%;background:var(--primary);transition:.25s}
+
+    .grid{display:grid;gap:14px;margin-top:14px}
+    .section{padding:14px;border-radius:16px}
+    .section h3{margin:0}
+    .item{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(127,127,127,.04);
+      margin-top:10px;
+    }
+    .item input{margin-top:3px;transform:scale(1.05)}
+    .title{font-weight:900}
+    .desc{color:var(--muted);font-size:13px;margin-top:4px}
+    .note{
+      width:100%; margin-top:8px;
+      border:1px solid var(--line); border-radius:12px;
+      padding:8px 10px; background:var(--panel);
+      color:var(--text); font-size:13px;
+    }
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  </style>
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <a data-nav href="questions.html">Questions</a>
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+        <a data-nav href="checklist.html">Checklist</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" id="themeToggle" title="Light/Dark toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <div class="headrow">
+        <div>
+          <h1 class="h1">Interview Checklist</h1>
+          <p class="p">Tick items, add notes, and track progress. Saved locally (refresh-safe).</p>
+
+          <div class="filters">
+            <button class="chip active" data-filter="all" type="button">All</button>
+            <button class="chip" data-filter="resume" type="button">Resume</button>
+            <button class="chip" data-filter="hr" type="button">HR</button>
+            <button class="chip" data-filter="behavioral" type="button">Behavioral</button>
+            <button class="chip" data-filter="technical" type="button">Technical</button>
+            <button class="chip" data-filter="projects" type="button">Projects</button>
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="mock.html">Start mock</a>
+            <a class="btn" href="questions.html">Question bank</a>
+            <button class="btn" id="resetBtn" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="panel pad" style="min-width:280px;max-width:420px;width:100%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div style="font-weight:900;">Overall progress</div>
+            <span class="badge" id="progressBadge">0%</span>
+          </div>
+
+          <div class="progressBar" style="margin-top:10px;">
+            <div class="progressFill" id="progressFill"></div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:12px;">
+            <span id="doneCount">0/0 done</span>
+            <span id="statusText">Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" id="checklistRoot"></div>
+    </div>
+  </div>
+
+  <!-- same auth dropdown you already use -->
+  <script type="module" src="resume-auth.js"></script>
+
+  <script src="app.js"></script>
+  <script src="checklist.js"></script>
+</body>
+</html>

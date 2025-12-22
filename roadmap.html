@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roadmap • InterviewMate</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .userwrap {
+      position: relative
+    }
+
+    .userpill {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .userdd {
+      position: absolute;
+      right: 0;
+      top: 46px;
+      width: 220px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      display: none;
+      z-index: 50;
+    }
+
+    .userdd.open {
+      display: block
+    }
+
+    .userdd .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      word-break: break-all
+    }
+
+    .userdd button {
+      width: 100%;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .userdd button:hover {
+      background: #f7f7ff
+    }
+
+    /* dark mode friendly */
+    body.dark .userdd {
+      background: var(--panel)
+    }
+
+    body.dark .userdd button {
+      background: var(--panel);
+      color: var(--text)
+    }
+
+
+    .road-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: flex-start
+    }
+
+    .road-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: end
+    }
+
+    .road-form select,
+    .road-form input {
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 0 10px;
+      min-width: 180px;
+    }
+
+    .progressBar {
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: rgba(127, 127, 127, .08)
+    }
+
+    .progressFill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: .25s
+    }
+
+    .rm-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px
+    }
+
+    .rm-week {
+      padding: 14px;
+      border-radius: 16px
+    }
+
+    .rm-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(127, 127, 127, .04)
+    }
+
+    .rm-item input {
+      margin-top: 3px
+    }
+
+    .rm-title {
+      font-weight: 800
+    }
+
+    .rm-desc {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px
+    }
+
+    .rm-note {
+      width: 100%;
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 13px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <!-- <a data-nav href="questions.html">Questions</a> -->
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" id="themeToggle" title="Light/Dark toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <div class="road-head">
+        <div>
+          <h1 class="h1" id="rmTitle">Interview Roadmap</h1>
+          <p class="p" id="rmSummary">Generate a personalized roadmap using AI.</p>
+
+          <div class="road-form" style="margin-top:10px;">
+            <div>
+              <label class="muted" style="font-size:12px;">Role</label><br />
+              <select id="roleSelect">
+                <option>General HR / any role</option>
+                <option>Frontend Developer</option>
+                <option>Backend Developer</option>
+                <option>Software Engineer</option>
+                <option>Data Analyst</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="muted" style="font-size:12px;">Level</label><br />
+              <select id="levelSelect">
+                <option>Junior</option>
+                <option>Mid</option>
+                <option>Senior</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="muted" style="font-size:12px;">Weeks</label><br />
+              <select id="weeksSelect">
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8" selected>8</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div style="min-width:260px;">
+              <label class="muted" style="font-size:12px;">Goal</label><br />
+              <input id="goalInput" placeholder="e.g. Crack junior frontend interviews" />
+            </div>
+
+            <button class="btn primary" id="generateBtn" type="button">Generate with AI</button>
+            <button class="btn" id="resetProgressBtn" type="button">Reset progress</button>
+          </div>
+        </div>
+
+        <div class="panel pad" style="min-width:280px;max-width:420px;width:100%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div style="font-weight:800;">Overall progress</div>
+            <span class="badge" id="progressBadge">0%</span>
+          </div>
+
+          <div class="progressBar" style="margin-top:10px;">
+            <div class="progressFill" id="progressFill"></div>
+          </div>
+
+          <div
+            style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:12px;">
+            <span id="doneCount">0/0 done</span>
+            <span id="statusText">Idle</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-grid" id="roadmapRoot"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="roadmap-ai.js"></script>
+  <script type="module" src="roadmap-auth.js"></script>
+
+</body>
+
+</html>

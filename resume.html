@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Resume • InterviewMate</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    .userwrap{position:relative}
+    .userpill{cursor:pointer; user-select:none;}
+    .userdd{
+      position:absolute; right:0; top:46px;
+      width:220px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      padding:10px;
+      display:none;
+      z-index:50;
+    }
+    .userdd.open{display:block}
+    .userdd .meta{font-size:12px;color:var(--muted); margin-bottom:10px; word-break:break-all}
+    .userdd button{
+      width:100%;
+      height:36px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .userdd button:hover{background:#f7f7ff}
+    body.dark .userdd{background:var(--panel)}
+    body.dark .userdd button{background:var(--panel); color:var(--text)}
+
+    /* small helpers */
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  </style>
+</head>
+
+<body>
+  <div class="container topbar">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span><span>Interviewmate</span>
+      </a>
+
+      <div class="navlinks">
+        <a data-nav href="dashboard.html">Dashboard</a>
+        <a data-nav href="mock.html">Mock interview</a>
+        <a data-nav href="resume.html">Resume</a>
+        <a data-nav href="history.html">History</a>
+        <a data-nav href="roadmap.html">Roadmap</a>
+      </div>
+
+      <div class="navright">
+        <div class="toggle on" id="themeToggle" title="Light/Dark toggle"></div>
+
+        <!-- ✅ user pill dynamic -->
+        <div class="userwrap">
+          <div class="userpill" id="userPill">
+            <span id="userName">Loading...</span> <span class="chev">▾</span>
+          </div>
+
+          <div class="userdd" id="userDropdown">
+            <div class="meta" id="userEmail">—</div>
+            <button id="logoutBtn" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="panel soft pad">
+      <h1 class="h1">Resume Analyzer</h1>
+      <p class="p">Upload part is demo. AI analyze works via pasted resume text.</p>
+
+      <div class="resume-layout">
+        <div class="panel side">
+          <div class="h2" style="margin-top:0;">Resume check</div>
+          <a class="side-link active" href="#">Upload + AI</a>
+          <a class="side-link" href="checklist.html">Checklist</a>
+        </div>
+
+        <div style="display:grid;gap:14px;">
+
+          <!-- Upload demo
+          <div class="panel upload-box">
+            <h2 class="h2" style="margin-top:0;">Upload your resume (demo only)</h2>
+            <p class="p" style="margin-bottom:10px;">
+              Choose a PDF or DOCX file. Nothing will be uploaded here, this is just layout.
+            </p>
+
+            <div class="file-row">
+              <input id="resumeFile" type="file" accept=".pdf,.doc,.docx" class="input" style="max-width:420px;">
+              <div class="file-meta">Max size idea: 5–10 MB.</div>
+            </div>
+            <div class="file-meta" style="margin-top:8px;">
+              <strong id="resumeFilename">No file chosen</strong>
+            </div> -->
+
+            <!-- ✅ AI resume analyze -->
+            <div class="hr" style="margin:14px 0;"></div>
+
+            <h2 class="h2" style="margin-top:0;">Analyze with AI</h2>
+            <p class="p" style="margin-bottom:10px;">
+              Write your resume in a plain text so that AI can analyze it.
+            </p>
+
+            <div class="btnrow">
+              <select id="targetRole" class="input" style="max-width:260px;">
+                <option>General</option>
+                <option>Frontend Developer</option>
+                <option>Backend Developer</option>
+                <option>Software Engineer</option>
+                <option>Data Analyst</option>
+              </select>
+
+              <button class="btn primary" id="analyzeResumeBtn" type="button">Analyze with AI</button>
+              <button class="btn" id="clearResumeTextBtn" type="button">Clear text</button>
+            </div>
+
+            <label for="resumeText" style="display:block;margin-top:10px;">Resume text</label>
+            <textarea id="resumeText" class="input" rows="10" placeholder="Paste your resume text here..."></textarea>
+
+            <div id="resumeResult"></div>
+          </div>
+
+          <!-- Checklist -->
+          <!-- <div class="panel upload-box">
+            <h2 class="h2" style="margin-top:0;">Quick checklist</h2>
+            <ul style="margin:0; padding-left:18px; color:#2f3442;">
+              <li>Length: 1 page for junior / 2 pages for experienced.</li>
+              <li>Clear headings: Experience, Skills, Education.</li>
+              <li>Use action verbs: built, led, improved, reduced.</li>
+              <li>Add numbers where possible (%, time saved, users, etc.).</li>
+            </ul>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth dropdown + protect page -->
+  <script type="module" src="resume-auth.js"></script>
+
+  <!-- Common app -->
+  <script src="app.js"></script>
+  <script>bindResumeUpload();</script>
+
+  <!-- ✅ AI resume analyzer -->
+  <script src="resume-ai.js"></script>
+</body>
+</html>
